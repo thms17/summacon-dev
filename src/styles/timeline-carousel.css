@@ -1,0 +1,25 @@
+html:is(.wf-design-mode, .w-editor) .timeline-carousel_component .swiper-wrapper {
+  flex-direction: column;
+}
+[timeline-carousel='navigation'] .swiper-slide {
+  width: auto;
+}
+
+html:is(.wf-design-mode, .w-editor) .section_timeline {
+  background: black !important;
+}
+
+.swiper-slide-thumb-active [timeline-carousel='navigation-year'] {
+  color: var(--text-color--text-blue);
+  transition: color 300ms ease-in-out;
+}
+
+.swiper-slide-thumb-active .timeline-carousel_year-nav-slide-point {
+  background-color: var(--text-color--text-blue);
+  transition: background-color 300ms ease-in-out;
+}
+
+.swiper-slide-thumb-active .blue {
+  width: 100%;
+  transition: width 300ms ease-in-out;
+}

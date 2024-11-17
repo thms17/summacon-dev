@@ -1,0 +1,38 @@
+/* Initiale Einstellungen für die Animation nur ab 992px */
+@media (min-width: 992px) {
+  [text-split] {
+    opacity: 0;
+    position: relative;
+    overflow: visible;
+  }
+
+  [hero-animation-reveal-later] {
+    opacity: 0;
+  }
+
+  [hero-image-reveal] {
+    opacity: 0;
+    position: relative;
+    overflow: hidden; /* Für zusätzliche Sicherheit, falls das Bild "überläuft" */
+  }
+
+  /* Stellt sicher, dass die Elemente für die Animation korrekt formatiert sind */
+  .word {
+    overflow: hidden;
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+    transform-origin: bottom;
+    display: inline-flex; /* Flex-Box hilft, dass der Text nicht abgeschnitten wird */
+    overflow: visible; /* Stellt sicher, dass Zeichen wie "g" korrekt angezeigt werden */
+  }
+
+  .char {
+    display: inline-block; /* Verhindert Layout-Verschiebungen */
+  }
+}
+
+/* Sichtbarkeit im Webflow-Editor */
+html.w-editor [text-split],
+html.w-editor [hero-animation-reveal-later] {
+  opacity: 1;
+}

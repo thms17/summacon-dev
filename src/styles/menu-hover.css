@@ -1,0 +1,45 @@
+.nav_menu_link::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  bottom: 7px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #a6a6a6;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+}
+
+.nav_menu_link:hover::before {
+  transform: scaleY(1);
+}
+
+/* Verstecke die Linie beim aktuellen Element */
+.nav_menu_link.w--current::before {
+  display: none;
+}
+
+.footer_link::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #a6a6a6;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+}
+
+.footer_link:hover::before {
+  transform: scaleY(1);
+}
+
+/* Verstecke die Linie beim aktuellen Element */
+.footer_link.w--current::before {
+  display: none;
+}

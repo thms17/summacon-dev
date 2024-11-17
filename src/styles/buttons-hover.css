@@ -1,0 +1,41 @@
+.button {
+  position: relative; /* Wichtige Positionierung */
+  overflow: hidden; /* Verhindert, dass das ::before-Element außerhalb des Buttons sichtbar ist */
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  background: var(--background-color--background-secondary);
+  width: 0;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  transition: width 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.button.form-button::before {
+  background: var(--base-color-brand--very-low-opacity-green);
+}
+.button.form-button::before {
+  z-index: 0; /* Setzen Sie den z-index des ::before Elements nur für den Formular-Button */
+}
+
+.button.form-button {
+  z-index: 1; /* Setzen Sie den z-index des Textinhalts höher als das ::before Element */
+}
+
+.button:hover::before {
+  width: 100%;
+}
+
+.button:hover {
+  color: var(--text-color--text-blue);
+  z-index: 1; /* Stellt sicher, dass der Button über dem ::before-Element bleibt */
+}
+.contact-link-block:hover .contact-form_svg-slot {
+  color: var(--text-color--text-blue); /* Ändert die Schriftfarbe */
+  transform: rotatez(-5deg); /* Leichte Drehung um die X-Achse */
+  transition: color 200ms ease-in-out, transform 200ms ease-in-out; /* Animation für Farbe und Drehung */
+}

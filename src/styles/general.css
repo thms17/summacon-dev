@@ -1,0 +1,29 @@
+.grid-cell:hover {
+  transition: all 0s;
+}
+
+.zitate-grid_cell:hover {
+  transition: all 0s;
+}
+
+.summacon_grid-cell:hover {
+  transition: all 0s;
+}
+
+.kraftquelle_grid-cell:hover {
+  transition: all 0s;
+}
+
+.button .is-secondary {
+  border-image: none !important;
+}
+
+.erfolg-cms_rich-text li {
+  break-inside: avoid; /* Verhindert, dass Listenelemente zwischen den Spalten unterbrochen werden */
+}
+
+.wf-design-mode .navbar_component.is-open .navbar_dropdown-panel {
+  display: block;
+  visibility: visible;
+  height: auto;
+}

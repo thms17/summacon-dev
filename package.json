@@ -57,8 +57,12 @@
   },
   "dependencies": {
     "@finsweet/ts-utils": "^0.39.2",
+    "@splinetool/runtime": "^1.9.27",
     "gsap": "^3.12.2",
-    "split-type": "^0.3.3"
+    "lottie-web": "^5.12.2",
+    "spline": "^0.0.0",
+    "split-type": "^0.3.3",
+    "swiper": "^11.1.14"
   },
   "engines": {
     "pnpm": ">=8"
