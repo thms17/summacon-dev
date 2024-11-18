@@ -150,17 +150,33 @@ function initTimelineCarousel() {
   }
 
   innerPrevButtonEls.forEach((button, index) => {
-    if (yearEls[index - 1]) {
-      button.ariaLabel = `Gehe zurück zu Jahr ${yearEls[index - 1].textContent}`
+    if (index === 0) {
+      // Erster Button wird deaktiviert
+      button.classList.add('greyed-out')
+      button.setAttribute('aria-disabled', 'true')
+      button.setAttribute('aria-label', 'Nicht verfügbar')
+    } else if (yearEls[index - 1]) {
+      // Funktionale Buttons
+      button.classList.remove('greyed-out')
+      button.setAttribute('aria-disabled', 'false')
+      button.setAttribute('aria-label', `Gehe zurück zu Jahr ${yearEls[index - 1].textContent}`)
+      button.addEventListener('click', () => {
+        panelCarousel.slideTo(index - 1)
+      })
     }
-    button.addEventListener('click', () => {
-      panelCarousel.slideTo(index - 1)
-    })
   })
 
   innerNextButtonEls.forEach((button, index) => {
-    if (index + 1 < yearEls.length) {
-      button.ariaLabel = `Gehe zu Jahr ${yearEls[index + 1].textContent}`
+    if (index === innerNextButtonEls.length - 1) {
+      // Letzter Button wird deaktiviert
+      button.classList.add('greyed-out')
+      button.setAttribute('aria-disabled', 'true')
+      button.setAttribute('aria-label', 'Nicht verfügbar')
+    } else if (index + 1 < yearEls.length) {
+      // Funktionale Buttons
+      button.classList.remove('greyed-out')
+      button.setAttribute('aria-disabled', 'false')
+      button.setAttribute('aria-label', `Gehe zu Jahr ${yearEls[index + 1].textContent}`)
       button.addEventListener('click', () => {
         panelCarousel.slideTo(index + 1)
       })

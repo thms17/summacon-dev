@@ -1,5 +1,6 @@
-import { gsap } from '../index' // ScrollTrigger wird hier nicht verwendet und daher entfernt
+import { gsap, ScrollToPlugin } from '../index'
 
+gsap.registerPlugin(ScrollToPlugin)
 // Funktion zum Anzeigen und Verstecken des Scroll-to-Top Buttons
 const initScrollToTopButton = () => {
   const scrollToTopBtn = document.querySelector('.scroll-to-top-button')
@@ -46,8 +47,9 @@ const initScrollToTopButton = () => {
 
   // Funktion, um beim Klick zum Seitenanfang zu scrollen
   scrollToTopBtn.addEventListener('click', (e) => {
+    console.log('click')
     e.preventDefault()
-    gsap.to(window, { scrollTo: { y: 0 }, duration: 0.5, ease: 'power2.out' })
+    gsap.to(window, { scrollTo: { y: 0 }, duration: 0.8, ease: 'power2.out' })
   })
 }
 

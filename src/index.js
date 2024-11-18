@@ -11,7 +11,7 @@ import Swiper from 'swiper'
 import { A11y, Thumbs } from 'swiper/modules'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import lottie from 'lottie-web'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
 import './components/swiper-timeline'
 import './components/accordion'
@@ -24,4 +24,4 @@ import './components/nav'
 import './components/gsap-text-animations'
 import './components/move-up-gsap'
 
-export { Swiper, A11y, Thumbs, gsap, ScrollTrigger, lottie }
+export { Swiper, A11y, Thumbs, gsap, ScrollTrigger, ScrollToPlugin }
