@@ -7,6 +7,7 @@ import './styles/menu-hover.css'
 import './styles/buttons-hover.css'
 import './styles/nav.css'
 import './styles/lebenslaufForm.css'
+import './styles/languageSwitcher.css'
 
 import Swiper from 'swiper'
 import { A11y, Thumbs } from 'swiper/modules'

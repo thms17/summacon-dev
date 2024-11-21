@@ -1,0 +1,7 @@
+.language-dropdown .w-dropdown-list {
+  transform-origin: bottom center;
+}
+.language-dropdown .w-dropdown-list {
+  top: auto;
+  bottom: 100%;
+}
