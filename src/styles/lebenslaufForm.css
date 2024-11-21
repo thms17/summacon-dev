@@ -1,0 +1,7 @@
+[lebenslauf-form-wrapper].is-open {
+  height: auto; /* JS übernimmt diesen Zustand */
+}
+
+[lebenslauf-form-wrapper] {
+  will-change: height;
+}

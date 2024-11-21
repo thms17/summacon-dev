@@ -6,6 +6,7 @@ import './styles/general.css'
 import './styles/menu-hover.css'
 import './styles/buttons-hover.css'
 import './styles/nav.css'
+import './styles/lebenslaufForm.css'
 
 import Swiper from 'swiper'
 import { A11y, Thumbs } from 'swiper/modules'
@@ -23,5 +24,6 @@ import './components/video'
 import './components/nav'
 import './components/gsap-text-animations'
 import './components/move-up-gsap'
+import './components/lebenslaufForm'
 
 export { Swiper, A11y, Thumbs, gsap, ScrollTrigger, ScrollToPlugin }
