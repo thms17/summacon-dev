@@ -60,6 +60,16 @@ function initNavbar() {
           },
           '<50%'
         )
+        // document.addEventListener('click', (event) => {
+        //   console.log(menuOpen)
+        //   if (menuOpen) {
+        //     console.log(event.relatedTarget !== component)
+        //     console.log(!component.contains(event.target))
+        //     if (event.target !== component && !component.contains(event.target)) {
+        //       closeMenu()
+        //     }
+        //   }
+        // })
 
         function navbarState(value) {
           if (value === 'open') {

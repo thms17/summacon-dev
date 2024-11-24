@@ -1,4 +1,4 @@
-import { A11y, gsap, Swiper, Thumbs } from '../index'
+import { gsap, Swiper, Thumbs } from '../index'
 
 function assignBecameBlueClass(container) {
   // Sammle alle Elemente mit der Klasse 'swiper-slide' in einem Array

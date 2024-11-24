@@ -10,7 +10,7 @@ import './styles/lebenslaufForm.css'
 import './styles/languageSwitcher.css'
 
 import Swiper from 'swiper'
-import { A11y, Thumbs } from 'swiper/modules'
+import { Thumbs } from 'swiper/modules'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
@@ -27,4 +27,4 @@ import './components/gsap-text-animations'
 import './components/move-up-gsap'
 import './components/lebenslaufForm'
 
-export { Swiper, A11y, Thumbs, gsap, ScrollTrigger, ScrollToPlugin }
+export { Swiper, Thumbs, gsap, ScrollTrigger, ScrollToPlugin }

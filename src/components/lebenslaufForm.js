@@ -3,25 +3,44 @@ import { gsap } from 'gsap'
 // Elemente auswählen
 const button = document.querySelector('[lebenslauf-button]')
 const formWrapper = document.querySelector('[lebenslauf-form-wrapper]')
-const subjectField = document.querySelector('[betreff-field]')
-const nameField = document.querySelector('[lebenslauf-name]')
 
-// Skript nur ausführen, wenn alle Elemente vorhanden sind
-if (button && formWrapper && subjectField && nameField) {
+// Funktion zum Finden fokussierbarer Kinder
+function getFocusableElements(container) {
+  return container.querySelectorAll(
+    'input, textarea, button, select, a[href], [tabindex]:not([tabindex="-1"])'
+  )
+}
+
+// Funktion zum Steuern des tabindex
+function setTabindex(container, hidden) {
+  const focusableElements = getFocusableElements(container)
+  focusableElements.forEach((el) => {
+    if (hidden) {
+      el.setAttribute('tabindex', '-1') // Fokussierbarkeit entfernen
+    } else {
+      el.removeAttribute('tabindex') // Fokussierbarkeit wiederherstellen
+    }
+  })
+}
+
+// Prüfen, ob alle erforderlichen Elemente vorhanden sind
+if (button && formWrapper) {
   button.addEventListener('click', () => {
     const isOpen = formWrapper.getAttribute('data-open') === 'true'
 
     if (isOpen) {
+      // Bevor das Formular geschlossen wird, Fokus vom Input entfernen
+      button.focus() // Fokus auf den Button legen
+
       // Schließen des Formulars
       gsap.to(formWrapper, {
         height: 0,
-        duration: 0.5,
+        duration: 0.8,
         ease: 'power2.inOut',
         onComplete: () => {
           formWrapper.setAttribute('data-open', 'false')
-          formWrapper.setAttribute('aria-hidden', 'true') // Für Screenreader unsichtbar
           button.setAttribute('aria-expanded', 'false') // Button zeigt geschlossen
-          button.focus() // Fokus zurück auf den Button setzen
+          setTabindex(formWrapper, true) // tabindex entfernen
         }
       })
     } else {
@@ -35,14 +54,8 @@ if (button && formWrapper && subjectField && nameField) {
         onComplete: () => {
           formWrapper.style.height = 'auto' // Nach der Animation auf auto setzen
           formWrapper.setAttribute('data-open', 'true')
-          formWrapper.setAttribute('aria-hidden', 'false') // Für Screenreader sichtbar
           button.setAttribute('aria-expanded', 'true') // Button zeigt geöffnet
-
-          // Betreff-Feld vorausfüllen
-          subjectField.value = 'Anfrage ganzer Lebenslauf'
-
-          // Fokus auf das Namensfeld legen
-          nameField.focus()
+          setTabindex(formWrapper, false) // tabindex wiederherstellen
         }
       })
     }
