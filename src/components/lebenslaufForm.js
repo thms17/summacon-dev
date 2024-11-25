@@ -18,9 +18,14 @@ function setTabindex(container, hidden) {
     if (hidden) {
       el.setAttribute('tabindex', '-1') // Fokussierbarkeit entfernen
     } else {
-      el.removeAttribute('tabindex') // Fokussierbarkeit wiederherstellen
+      el.setAttribute('tabindex', '0') // Fokussierbarkeit wiederherstellen
     }
   })
+}
+
+// tabindex bei Pageload entfernen
+if (formWrapper) {
+  setTabindex(formWrapper, true) // Standard: Fokussierbarkeit deaktiviert
 }
 
 // Prüfen, ob alle erforderlichen Elemente vorhanden sind
