@@ -9,9 +9,9 @@ const menuTrigger = document.querySelector('[navbar="dropdown-trigger"]')
 const topLine = document.querySelector('.line.top')
 const middleLine = document.querySelector('.line.middle')
 const bottomLine = document.querySelector('.line.bottom')
-const mobileTrigger = component.querySelector('[navbar="dropdown-trigger"]')
-const dropdownPanel = component.querySelector('[navbar="dropdown-panel"]')
-const dropdownItems = component.querySelectorAll('.nav_menu_link')
+const mobileTrigger = component?.querySelector('[navbar="dropdown-trigger"]')
+const dropdownPanel = component?.querySelector('[navbar="dropdown-panel"]')
+const dropdownItems = component?.querySelectorAll('.nav_menu_link')
 
 const mm = gsap.matchMedia()
 const breakpoint = 992
@@ -39,53 +39,35 @@ function initNavbar() {
           }
         })
 
-        navMobileOpenAnim.to(dropdownPanel, {
-          visibility: 'visible',
-          height: 'auto',
-          duration: 1,
-          ease: 'power3.inOut'
-        })
-        navMobileOpenAnim.fromTo(
-          dropdownItems,
-          {
-            autoAlpha: 0,
-            y: '1rem'
-          },
-          {
-            autoAlpha: 1,
-            y: '0rem',
-            duration: 0.2,
-            ease: 'power3.inOut',
-            stagger: 0.1
-          },
-          '<50%'
-        )
-        // document.addEventListener('click', (event) => {
-        //   console.log(menuOpen)
-        //   if (menuOpen) {
-        //     console.log(event.relatedTarget !== component)
-        //     console.log(!component.contains(event.target))
-        //     if (event.target !== component && !component.contains(event.target)) {
-        //       closeMenu()
-        //     }
-        //   }
-        // })
+        navMobileOpenAnim
+          .set(dropdownPanel, { visibility: 'visible' })
+          .to(dropdownPanel, {
+            height: 'auto',
+            duration: 1,
+            ease: 'power3.inOut'
+          })
+          .fromTo(
+            dropdownItems,
+            { autoAlpha: 0, y: '1rem' },
+            { autoAlpha: 1, y: '0rem', duration: 0.2, stagger: 0.1, ease: 'power3.inOut' },
+            '<50%'
+          )
 
         function navbarState(value) {
           if (value === 'open') {
             mobileTrigger.setAttribute('aria-expanded', true)
-            mobileTrigger.setAttribute('aria-label', 'Menü schließen') // Ändert Aria-Label
+            mobileTrigger.setAttribute('aria-label', 'Menü schließen')
             component.classList.add('nav-mobile-open')
             document.body.style.overflow = 'hidden'
-            document.body.classList.add('no-select') // Deaktiviert Textauswahl
+            document.body.classList.add('no-select')
             gsap.to(overlay, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' })
             menuOpen = true
           } else {
             mobileTrigger.setAttribute('aria-expanded', false)
-            mobileTrigger.setAttribute('aria-label', 'Menü öffnen') // Ändert Aria-Label
+            mobileTrigger.setAttribute('aria-label', 'Menü öffnen')
             component.classList.remove('nav-mobile-open')
             document.body.style.overflow = 'visible'
-            document.body.classList.remove('no-select') // Aktiviert Textauswahl wieder
+            document.body.classList.remove('no-select')
             gsap.to(overlay, { autoAlpha: 0, duration: 0.3, ease: 'power2.out' })
             menuOpen = false
           }
@@ -101,13 +83,27 @@ function initNavbar() {
           }
         }
 
-        mobileTrigger.addEventListener('click', function () {
-          playStateMobileAnim()
+        mobileTrigger.addEventListener('click', playStateMobileAnim)
+
+        mobileTrigger.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            toggleMenu()
+            playStateMobileAnim()
+          }
         })
 
-        mobileTrigger.addEventListener('keydown', function (event) {
-          if (event.key === 'Enter' || event.key === ' ') {
-            playStateMobileAnim()
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && menuOpen) {
+            toggleMenu()
+            navMobileOpenAnim.reverse()
+          }
+        })
+
+        document.addEventListener('click', (event) => {
+          if (menuOpen && !component.contains(event.target) && event.target !== mobileTrigger) {
+            toggleMenu()
+            navMobileOpenAnim.reverse()
           }
         })
       }
@@ -123,9 +119,9 @@ function toggleMenu() {
     gsap.to(middleLine, { autoAlpha: 0, duration: 0.3, ease: 'power4.out' })
     gsap.to(bottomLine, { rotation: -45, y: 0, duration: 0.3, ease: 'power2.out' })
     gsap.to(dropdownPanel, { opacity: 1, duration: 0.3, ease: 'power2.out' })
-    document.body.classList.add('no-select') // Deaktiviert Textauswahl
+    document.body.classList.add('no-select')
     menuOpen = true
-    menuTrigger.setAttribute('aria-label', 'Menü schließen') // Ändert Aria-Label
+    menuTrigger.setAttribute('aria-label', 'Menü schließen')
   } else {
     closeMenu()
   }
@@ -139,43 +135,23 @@ function closeMenu() {
     }
   })
 
-  closeTimeline.to(overlay, {
-    autoAlpha: 0,
-    duration: 0.3,
-    ease: 'power2.out'
-  })
-
-  closeTimeline.to(
-    dropdownItems,
-    {
-      autoAlpha: 0,
-      y: '-1rem',
-      duration: 0.2,
-      ease: 'power3.inOut',
-      stagger: -0.2
-    },
-    0
-  )
-
-  closeTimeline.to(
-    dropdownPanel,
-    {
-      height: 0,
-      duration: 0.7,
-      ease: 'power2.inOut'
-    },
-    0
-  )
-
-  closeTimeline.to(topLine, { rotation: 0, y: -6, duration: 0.3, ease: 'power2.out' }, 0)
-  closeTimeline.to(middleLine, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' }, 0)
-  closeTimeline.to(bottomLine, { rotation: 0, y: 6, duration: 0.3, ease: 'power2.out' }, 0)
+  closeTimeline
+    .to(overlay, { autoAlpha: 0, duration: 0.3, ease: 'power2.out' })
+    .to(
+      dropdownItems,
+      { autoAlpha: 0, y: '-1rem', duration: 0.2, ease: 'power3.inOut', stagger: -0.2 },
+      0
+    )
+    .to(dropdownPanel, { height: 0, duration: 0.7, ease: 'power2.inOut' }, 0)
+    .to(topLine, { rotation: 0, y: -6, duration: 0.3, ease: 'power2.out' }, 0)
+    .to(middleLine, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' }, 0)
+    .to(bottomLine, { rotation: 0, y: 6, duration: 0.3, ease: 'power2.out' }, 0)
 
   component.classList.remove('nav-mobile-open')
   document.body.style.overflow = 'visible'
-  document.body.classList.remove('no-select') // Aktiviert Textauswahl wieder
+  document.body.classList.remove('no-select')
   menuOpen = false
-  menuTrigger.setAttribute('aria-label', 'Menü öffnen') // Ändert Aria-Label
+  menuTrigger.setAttribute('aria-label', 'Menü öffnen')
 }
 
 menuTrigger.addEventListener('click', toggleMenu)
