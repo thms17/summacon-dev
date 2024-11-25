@@ -13,6 +13,7 @@ function partnerAccordion() {
     const text = accordion.querySelector('[partner-accordion="text"]')
     const openText = button.querySelector('[partner-accordion="open-text"]')
     const closeText = button.querySelector('[partner-accordion="close-text"]')
+    const links = panel.querySelectorAll('a, button, input, select, textarea') // Interaktive Elemente im Panel
 
     if (!button || !panel) return // Falls Button oder Panel fehlen, abbrechen
 
@@ -20,9 +21,11 @@ function partnerAccordion() {
     button.setAttribute('aria-expanded', 'false')
     panel.setAttribute('aria-hidden', 'true')
 
+    // tabindex=-1 für interaktive Elemente setzen
+    links.forEach((link) => link.setAttribute('tabindex', '-1'))
+
     button.addEventListener('click', function () {
       const isOpen = button.getAttribute('aria-expanded') === 'true' // Prüfen, ob geöffnet ist
-
       const duration = 0.9
       const ease = 'power2.inOut'
 
@@ -30,6 +33,10 @@ function partnerAccordion() {
         // Panel aufklappen
         button.setAttribute('aria-expanded', 'true')
         panel.setAttribute('aria-hidden', 'false')
+
+        // Interaktive Elemente aktivieren
+        links.forEach((link) => link.setAttribute('tabindex', '0'))
+
         gsap.fromTo(
           panel,
           {
@@ -98,6 +105,10 @@ function partnerAccordion() {
         // Panel einklappen
         button.setAttribute('aria-expanded', 'false')
         panel.setAttribute('aria-hidden', 'true')
+
+        // Interaktive Elemente deaktivieren
+        links.forEach((link) => link.setAttribute('tabindex', '-1'))
+
         gsap.to(panel, {
           height: 0,
           autoAlpha: 0,
