@@ -11,7 +11,7 @@ const middleLine = document.querySelector('.line.middle')
 const bottomLine = document.querySelector('.line.bottom')
 const mobileTrigger = component?.querySelector('[navbar="dropdown-trigger"]')
 const dropdownPanel = component?.querySelector('[navbar="dropdown-panel"]')
-const dropdownItems = component?.querySelectorAll('.nav_menu_link')
+const dropdownItems = component?.querySelectorAll('[navbar="item"]') // Auswahl der Dropdown-Elemente
 
 const mm = gsap.matchMedia()
 const breakpoint = 992
@@ -49,7 +49,7 @@ function initNavbar() {
           .fromTo(
             dropdownItems,
             { autoAlpha: 0, y: '1rem' },
-            { autoAlpha: 1, y: '0rem', duration: 0.2, stagger: 0.1, ease: 'power3.inOut' },
+            { autoAlpha: 1, y: '0rem', duration: 0.1, stagger: 0.07, ease: 'power1.Out' },
             '<50%'
           )
 
@@ -131,21 +131,65 @@ function closeMenu() {
   const closeTimeline = gsap.timeline({
     onComplete: () => {
       dropdownPanel.style.visibility = 'hidden'
-      dropdownPanel.style.height = 'auto'
+      dropdownPanel.style.maxHeight = 'none' // Entfernt die max-height-Beschränkung nach der Animation
     }
   })
 
   closeTimeline
-    .to(overlay, { autoAlpha: 0, duration: 0.3, ease: 'power2.out' })
+    .to(overlay, {
+      autoAlpha: 0,
+      duration: 0.3,
+      ease: 'power2.out'
+    })
     .to(
       dropdownItems,
-      { autoAlpha: 0, y: '-1rem', duration: 0.2, ease: 'power3.inOut', stagger: -0.2 },
+      {
+        autoAlpha: 0,
+        duration: 0.1,
+        ease: 'power1.out',
+        stagger: -0.1
+      },
       0
     )
-    .to(dropdownPanel, { height: 0, duration: 0.7, ease: 'power2.inOut' }, 0)
-    .to(topLine, { rotation: 0, y: -6, duration: 0.3, ease: 'power2.out' }, 0)
-    .to(middleLine, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' }, 0)
-    .to(bottomLine, { rotation: 0, y: 6, duration: 0.3, ease: 'power2.out' }, 0)
+    .fromTo(
+      dropdownPanel,
+      { maxHeight: dropdownPanel.scrollHeight + 'px' }, // Startwert: aktuelle Scroll-Höhe
+      {
+        maxHeight: '0px', // Endwert: 0px
+        duration: 0.7,
+        ease: 'power2.inOut'
+      },
+      0
+    )
+    .to(
+      topLine,
+      {
+        rotation: 0,
+        y: -6,
+        duration: 0.3,
+        ease: 'power2.out'
+      },
+      0
+    )
+    .to(
+      middleLine,
+      {
+        autoAlpha: 1,
+        duration: 0.3,
+        ease: 'power1.out'
+      },
+      0
+    )
+    .to(
+      bottomLine,
+      {
+        rotation: 0,
+        y: 6,
+        duration: 0.3,
+        ease: 'power2.out'
+      },
+      0
+    )
 
   component.classList.remove('nav-mobile-open')
   document.body.style.overflow = 'visible'

@@ -26,7 +26,7 @@ function partnerAccordion() {
 
     button.addEventListener('click', function () {
       const isOpen = button.getAttribute('aria-expanded') === 'true' // Prüfen, ob geöffnet ist
-      const duration = 0.9
+      const duration = 0.1
       const ease = 'power2.inOut'
 
       if (!isOpen) {

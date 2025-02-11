@@ -1,93 +1,67 @@
-const players = new Map();
-const placeholders = document.querySelectorAll('[video-component="placeholder"]');
-const videoContainers = Array.from(document.querySelectorAll('[video-component="container"]'));
+const players = new Map()
+const videoContainers = Array.from(document.querySelectorAll('[video-component="container"]'))
 
 // Lade alle Videos sofort
-loadAllVideos(videoContainers, players);
+loadAllVideos(videoContainers, players)
 
+// Event-Listener für Buttons hinzufügen
 document.querySelectorAll('[video-component="load-video"]').forEach(function (button) {
   button.addEventListener('click', function () {
-    localStorage.setItem('showVideos', true);
-    const videoContainer = button.closest('[video-component="container"]');
-    const index = videoContainers.indexOf(videoContainer);
+    localStorage.setItem('showVideos', true)
+    const videoContainer = button.closest('[video-component="container"]')
+    const index = videoContainers.indexOf(videoContainer)
 
-    // Entferne den Placeholder und starte das Video direkt
-    const placeholder = videoContainer.querySelector('[video-component="placeholder"]');
-    if (placeholder) placeholder.style.display = 'none';
+    // Entferne den Placeholder und starte das Video
+    const placeholder = videoContainer.querySelector('[video-component="placeholder"]')
+    if (placeholder) placeholder.style.display = 'none'
 
-    playVideo(players, index);
-  });
+    playVideo(players, index) // Video abspielen
+  })
 
   button.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
-      localStorage.setItem('showVideos', true);
-      const videoContainer = button.closest('[video-component="container"]');
-      const index = videoContainers.indexOf(videoContainer);
+      localStorage.setItem('showVideos', true)
+      const videoContainer = button.closest('[video-component="container"]')
+      const index = videoContainers.indexOf(videoContainer)
 
-      // Entferne den Placeholder und starte das Video direkt
-      const placeholder = videoContainer.querySelector('[video-component="placeholder"]');
-      if (placeholder) placeholder.style.display = 'none';
+      // Entferne den Placeholder und starte das Video
+      const placeholder = videoContainer.querySelector('[video-component="placeholder"]')
+      if (placeholder) placeholder.style.display = 'none'
 
-      playVideo(players, index);
+      playVideo(players, index) // Video abspielen
     }
-  });
-});
+  })
+})
 
+// Lade alle Videos
 function loadAllVideos(videoContainers, players) {
   videoContainers.forEach(function (container, index) {
-    loadVideo(container, players, index);
-  });
+    loadVideo(container, players, index)
+  })
 }
 
+// Lade ein einzelnes Video
 function loadVideo(videoContainer, players, index) {
-  const videoPlayer = videoContainer.querySelector('[video-component="player"]');
-  if (videoPlayer && videoPlayer.hasAttribute('data-plyr-provider')) {
-    const provider = videoPlayer.getAttribute('data-plyr-provider');
-    const embedId = videoPlayer.getAttribute('data-plyr-embed-id');
+  const videoPlayer = videoContainer.querySelector('[video-component="player"]')
+
+  if (videoPlayer) {
+    // Setze die Videoquelle
+    videoPlayer.src = 'https://assets.summacon.de/video/SummaCon_V1.webm'
+    videoPlayer.type = 'video/webm'
+
+    // Plyr-Player initialisieren
     const player = new Plyr(videoPlayer, {
-      controls: ['play-large', 'play', 'progress', 'current-time', 'volume', 'fullscreen'],
-      youtube: {
-        noCookie: true,
-        rel: 0,
-        showinfo: 0,
-        iv_load_policy: 3,
-        modestbranding: 1,
-      },
-    });
+      controls: ['play-large', 'play', 'progress', 'current-time', 'volume', 'fullscreen']
+    })
 
-    player.source = {
-      type: 'video',
-      sources: [
-        {
-          src: embedId,
-          provider: provider,
-        },
-      ],
-    };
-
-    players.set(index, player);
-  } else if (videoPlayer) {
-    const player = new Plyr(videoPlayer, {
-      controls: ['play-large', 'play', 'progress', 'current-time', 'volume', 'fullscreen'],
-    });
-
-    player.source = {
-      type: 'video',
-      sources: [
-        {
-          src: 'https://assets.summacon.de/video/SummaCon_V1.webm',
-          type: 'video/webm',
-        },
-      ],
-    };
-
-    players.set(index, player);
+    players.set(index, player)
   }
 }
 
+// Video abspielen
 function playVideo(players, index) {
-  const player = players.get(index);
+  const player = players.get(index)
   if (player) {
-    player.play(); // Starte das Video sofort
+    player.play()
   }
 }
