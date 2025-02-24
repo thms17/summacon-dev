@@ -2,6 +2,8 @@ import { gsap } from '../index'
 
 // Funktion, die die Animation ausführt
 function startAnimation() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (prefersReducedMotion) return
   const cells = document.querySelectorAll('.hero_grid-right-side-grid .grid-cell')
 
   if (cells.length === 0) return
