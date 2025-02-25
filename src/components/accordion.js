@@ -26,7 +26,7 @@ function partnerAccordion() {
 
     button.addEventListener('click', function () {
       const isOpen = button.getAttribute('aria-expanded') === 'true' // Prüfen, ob geöffnet ist
-      const duration = 0.1
+      const duration = 0.6
       const ease = 'power2.inOut'
 
       if (!isOpen) {
@@ -53,13 +53,13 @@ function partnerAccordion() {
         gsap.to(plusIcon, {
           rotation: 90,
           autoAlpha: 0,
-          duration: 0.4,
+          duration,
           ease
         })
         gsap.to(minusIcon, {
           rotation: 0,
           autoAlpha: 1,
-          duration: 0.4,
+          duration,
           ease
         })
         gsap.to(text, {
@@ -74,7 +74,7 @@ function partnerAccordion() {
           scale: 0.9,
           autoAlpha: 0,
           transformOrigin: 'left center',
-          duration: 0.4,
+          duration,
           ease,
           onComplete: () => {
             openText.style.visibility = 'hidden'
@@ -95,7 +95,7 @@ function partnerAccordion() {
             rotation: 0,
             scale: 1,
             visibility: 'visible',
-            duration: 0.4,
+            duration,
             autoAlpha: 1,
             transformOrigin: 'left center',
             ease
@@ -118,13 +118,13 @@ function partnerAccordion() {
         gsap.to(minusIcon, {
           rotation: -90,
           autoAlpha: 0,
-          duration: 0.4,
+          duration,
           ease
         })
         gsap.to(plusIcon, {
           rotation: 0,
           autoAlpha: 1,
-          duration: 0.4,
+          duration,
           ease
         })
         gsap.to(text, {
@@ -139,7 +139,7 @@ function partnerAccordion() {
           scale: 0.5,
           autoAlpha: 0,
           transformOrigin: 'left center',
-          duration: 0.4,
+          duration,
           ease,
           onComplete: () => {
             closeText.style.visibility = 'hidden'
@@ -160,7 +160,7 @@ function partnerAccordion() {
             rotation: 0,
             scale: 1,
             visibility: 'visible',
-            duration: 0.4,
+            duration,
             autoAlpha: 1,
             transformOrigin: 'left center',
             ease

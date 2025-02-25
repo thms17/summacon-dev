@@ -4,7 +4,6 @@ const videoContainers = Array.from(document.querySelectorAll('[video-component="
 // Lade alle Videos sofort
 loadAllVideos(videoContainers, players)
 
-// Event-Listener für Buttons hinzufügen
 document.querySelectorAll('[video-component="load-video"]').forEach(function (button) {
   button.addEventListener('click', function () {
     localStorage.setItem('showVideos', true)
@@ -15,7 +14,10 @@ document.querySelectorAll('[video-component="load-video"]').forEach(function (bu
     const placeholder = videoContainer.querySelector('[video-component="placeholder"]')
     if (placeholder) placeholder.style.display = 'none'
 
-    playVideo(players, index) // Video abspielen
+    // Steuerelemente aktivieren
+    setVideoControlsFocusable(videoContainer, true)
+
+    playVideo(players, index)
   })
 
   button.addEventListener('keydown', function (event) {
@@ -28,40 +30,73 @@ document.querySelectorAll('[video-component="load-video"]').forEach(function (bu
       const placeholder = videoContainer.querySelector('[video-component="placeholder"]')
       if (placeholder) placeholder.style.display = 'none'
 
-      playVideo(players, index) // Video abspielen
+      // Steuerelemente aktivieren
+      setVideoControlsFocusable(videoContainer, true)
+
+      playVideo(players, index)
     }
   })
 })
 
-// Lade alle Videos
 function loadAllVideos(videoContainers, players) {
   videoContainers.forEach(function (container, index) {
     loadVideo(container, players, index)
   })
 }
 
-// Lade ein einzelnes Video
 function loadVideo(videoContainer, players, index) {
   const videoPlayer = videoContainer.querySelector('[video-component="player"]')
 
   if (videoPlayer) {
-    // Setze die Videoquelle
-    videoPlayer.src = 'https://assets.summacon.de/video/SummaCon_V1.webm'
+    videoPlayer.src = 'https://pub-55c1ed121ab0419d82c39cd62613c574.r2.dev/SummaCon_V1.webm'
     videoPlayer.type = 'video/webm'
 
-    // Plyr-Player initialisieren
+    // **Plyr-Player initialisieren**
     const player = new Plyr(videoPlayer, {
-      controls: ['play-large', 'play', 'progress', 'current-time', 'volume', 'fullscreen']
+      controls: [
+        'play-large',
+        'play',
+        'progress',
+        'current-time',
+        'volume',
+        'settings',
+        'fullscreen'
+      ],
+      settings: ['captions'],
+      captions: { active: false, language: 'de', update: false },
+      i18n: { captions: 'Untertitel' }
+    })
+
+    // **Steuerelemente erst deaktivieren**
+    setVideoControlsFocusable(videoContainer, false)
+
+    // Falls notwendig, aktivieren, wenn das Video gestartet wird
+    player.on('play', () => {
+      setVideoControlsFocusable(videoContainer, true)
     })
 
     players.set(index, player)
   }
 }
 
-// Video abspielen
 function playVideo(players, index) {
   const player = players.get(index)
   if (player) {
-    player.play()
+    player.play().catch(() => {})
   }
+}
+
+// **Funktion zum (De-)Aktivieren der Fokusierbarkeit**
+function setVideoControlsFocusable(videoContainer, isFocusable) {
+  const controls = videoContainer.querySelectorAll(
+    '.plyr__controls button, .plyr__controls input, .plyr__controls a'
+  )
+
+  controls.forEach((control) => {
+    if (isFocusable) {
+      control.removeAttribute('tabindex')
+    } else {
+      control.setAttribute('tabindex', '-1')
+    }
+  })
 }
