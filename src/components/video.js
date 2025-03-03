@@ -48,8 +48,21 @@ function loadVideo(videoContainer, players, index) {
   const videoPlayer = videoContainer.querySelector('[video-component="player"]')
 
   if (videoPlayer) {
-    videoPlayer.src = 'https://pub-55c1ed121ab0419d82c39cd62613c574.r2.dev/SummaCon_V1.webm'
-    videoPlayer.type = 'video/webm'
+    // Entferne alte <source>-Elemente (falls sie existieren)
+    videoPlayer.innerHTML = ''
+
+    // Erstelle <source>-Elemente für WebM und MP4
+    const webmSource = document.createElement('source')
+    webmSource.src = 'https://assets.summacon.de/video/SummaCon_V1.webm'
+    webmSource.type = 'video/webm'
+
+    const mp4Source = document.createElement('source')
+    mp4Source.src = 'https://assets.summacon.de/video/SummaCon_V1.mp4'
+    mp4Source.type = 'video/mp4'
+
+    // Füge die Quellen in der Reihenfolge WebM → MP4 hinzu
+    videoPlayer.appendChild(webmSource)
+    videoPlayer.appendChild(mp4Source)
 
     // **Plyr-Player initialisieren**
     const player = new Plyr(videoPlayer, {
