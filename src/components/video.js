@@ -48,9 +48,6 @@ function loadVideo(videoContainer, players, index) {
   const videoPlayer = videoContainer.querySelector('[video-component="player"]')
 
   if (videoPlayer) {
-    // Entferne alte <source>-Elemente (falls sie existieren)
-    videoPlayer.innerHTML = ''
-
     // Erstelle <source>-Elemente für WebM und MP4
     const webmSource = document.createElement('source')
     webmSource.src = 'https://assets.summacon.de/video/SummaCon_V3_1080_WEBM.webm'
