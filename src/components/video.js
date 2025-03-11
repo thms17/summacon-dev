@@ -53,11 +53,11 @@ function loadVideo(videoContainer, players, index) {
 
     // Erstelle <source>-Elemente für WebM und MP4
     const webmSource = document.createElement('source')
-    webmSource.src = 'https://assets.summacon.de/video/SummaCon_V1.webm'
+    webmSource.src = 'https://assets.summacon.de/video/SummaCon_V3_1080_WEBM.webm'
     webmSource.type = 'video/webm'
 
     const mp4Source = document.createElement('source')
-    mp4Source.src = 'https://assets.summacon.de/video/SummaCon_V1.mp4'
+    mp4Source.src = 'https://assets.summacon.de/video/SummaCon_V3_1080.mp4'
     mp4Source.type = 'video/mp4'
 
     // Füge die Quellen in der Reihenfolge WebM → MP4 hinzu
