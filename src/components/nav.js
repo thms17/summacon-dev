@@ -9,7 +9,6 @@ const menuTrigger = document.querySelector('[navbar="dropdown-trigger"]')
 const topLine = document.querySelector('.line.top')
 const middleLine = document.querySelector('.line.middle')
 const bottomLine = document.querySelector('.line.bottom')
-const mobileTrigger = component?.querySelector('[navbar="dropdown-trigger"]')
 const dropdownPanel = component?.querySelector('[navbar="dropdown-panel"]')
 const dropdownItems = component?.querySelectorAll('[navbar="item"]') // Auswahl der Dropdown-Elemente
 
@@ -55,16 +54,16 @@ function initNavbar() {
 
         function navbarState(value) {
           if (value === 'open') {
-            mobileTrigger.setAttribute('aria-expanded', true)
-            mobileTrigger.setAttribute('aria-label', 'Menü schließen')
+            menuTrigger.setAttribute('aria-expanded', true)
+            menuTrigger.setAttribute('aria-label', 'Menü schließen')
             component.classList.add('nav-mobile-open')
             document.body.style.overflow = 'hidden'
             document.body.classList.add('no-select')
             gsap.to(overlay, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' })
             menuOpen = true
           } else {
-            mobileTrigger.setAttribute('aria-expanded', false)
-            mobileTrigger.setAttribute('aria-label', 'Menü öffnen')
+            menuTrigger.setAttribute('aria-expanded', false)
+            menuTrigger.setAttribute('aria-label', 'Menü öffnen')
             component.classList.remove('nav-mobile-open')
             document.body.style.overflow = 'visible'
             document.body.classList.remove('no-select')
@@ -83,9 +82,9 @@ function initNavbar() {
           }
         }
 
-        mobileTrigger.addEventListener('click', playStateMobileAnim)
+        menuTrigger.addEventListener('click', playStateMobileAnim)
 
-        mobileTrigger.addEventListener('keydown', (event) => {
+        menuTrigger.addEventListener('keydown', (event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault()
             toggleMenu()
@@ -101,7 +100,7 @@ function initNavbar() {
         })
 
         document.addEventListener('click', (event) => {
-          if (menuOpen && !component.contains(event.target) && event.target !== mobileTrigger) {
+          if (menuOpen && !component.contains(event.target) && event.target !== menuTrigger) {
             toggleMenu()
             navMobileOpenAnim.reverse()
           }
