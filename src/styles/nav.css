@@ -11,3 +11,43 @@
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
+
+.arrow-icon {
+  transition: transform 0.2s ease;
+}
+/* Pfeil drehen, wenn offen */
+.dropdown-trigger[aria-expanded='true'] .arrow-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  min-width: 15rem;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform-origin: top center;
+  display: none; /* GSAP setzt display:block beim Öffnen */
+}
+.dropdown-menu[data-open='true'] {
+  visibility: visible;
+}
+
+.dropdown-link[tabindex='-1'] {
+  pointer-events: none;
+}
+
+.no-js .dropdown-menu {
+  display: none;
+}
+
+li[data-dropdown='leistungen'] {
+  position: relative;
+  overflow: visible; /* ganz wichtig, damit das Menü nicht abgeschnitten wird */
+}
