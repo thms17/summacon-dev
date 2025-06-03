@@ -12,6 +12,28 @@
   transition: opacity 0.3s ease;
 }
 
+/* === Mobile (≤ 991px): Dropdown im Flow öffnen (nicht absolut) === */
+@media screen and (max-width: 991px) {
+  /* 1) Das Dropdown-Panel (.dropdown-menu) wird nicht mehr absolut positioniert */
+  [data-dropdown-menu] {
+    position: relative !important; /* statt absolute */
+    top: auto !important;
+    left: auto !important;
+    border: none !important;
+    width: 100% !important; /* volle Breite, damit es den Flow nutzt */
+    opacity: 1 !important; /* keine Fade-Opacity, nur height-Animation */
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none !important; /* kein Overlay-Schatten */
+    overflow: hidden; /* für Height-Animation */
+  }
+
+  /* 2) Sobald JavaScript data-open="true" setzt, machen wir display:block */
+  [data-dropdown-menu][data-open='true'] {
+    display: block; /* öffnet das Panel im Flow */
+  }
+}
+
 .arrow-icon {
   transition: transform 0.2s ease;
 }
@@ -27,7 +49,6 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 0;
   min-width: 15rem;
   z-index: 100;
   opacity: 0;

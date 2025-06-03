@@ -12,40 +12,65 @@ import { gsap } from 'gsap'
 
   // 2) Funktionen zum Öffnen/Schließen ohne geteiltes Timeline
   const openMenu = () => {
-    // Stop any ongoing animations on the menu
     gsap.killTweensOf(menu)
-    // ARIA-Attribute setzen
     trigger.setAttribute('aria-expanded', 'true')
-    // Menü sichtbar machen
     menu.removeAttribute('hidden')
     menu.setAttribute('data-open', 'true')
     links.forEach((link) => link.setAttribute('tabindex', '0'))
-    // Einblend-Animation
-    gsap.fromTo(
-      menu,
-      { autoAlpha: 0, y: -10, display: 'block' },
-      { duration: 0.25, autoAlpha: 1, y: 0, ease: 'power1.out' }
-    )
+
+    // Mobile vs. Desktop detection
+    if (!window.matchMedia('(min-width: 992px)').matches) {
+      // === MOBILE: timeline animate height from 0 to auto over 0.5s ===
+      const tlOpen = gsap.timeline()
+      tlOpen.set(menu, { visibility: 'visible', height: 0, display: 'block' }).to(menu, {
+        height: 'auto',
+        duration: 0.5,
+        onComplete: () => {
+          gsap.set(menu, { height: 'auto' })
+        }
+      })
+    } else {
+      // === DESKTOP: original fade/slide animation ===
+      gsap.fromTo(
+        menu,
+        { autoAlpha: 0, y: -10, display: 'block' },
+        { duration: 0.25, autoAlpha: 1, y: 0, ease: 'power1.out' }
+      )
+    }
   }
 
   const closeMenu = () => {
-    // Stop any ongoing animations on the menu
     gsap.killTweensOf(menu)
-    // ARIA-Attribute zurücksetzen
     trigger.setAttribute('aria-expanded', 'false')
     links.forEach((link) => link.setAttribute('tabindex', '-1'))
-    // Ausblend-Animation
-    gsap.to(menu, {
-      duration: 0.2,
-      autoAlpha: 0,
-      y: -10,
-      ease: 'power1.in',
-      onComplete: () => {
-        menu.setAttribute('hidden', '')
-        menu.removeAttribute('data-open')
-        gsap.set(menu, { display: 'none' })
-      }
-    })
+
+    // Mobile vs. Desktop detection
+    if (!window.matchMedia('(min-width: 992px)').matches) {
+      // === MOBILE: timeline animate height from auto (current) to 0 over 0.5s ===
+      const tlClose = gsap.timeline()
+      tlClose.to(menu, {
+        duration: 0.5,
+        height: 0,
+        onComplete: () => {
+          menu.setAttribute('hidden', '')
+          menu.removeAttribute('data-open')
+          gsap.set(menu, { display: 'none', height: 'auto' })
+        }
+      })
+    } else {
+      // === DESKTOP: original fade/slide out animation ===
+      gsap.to(menu, {
+        duration: 0.2,
+        autoAlpha: 0,
+        y: -10,
+        ease: 'power1.in',
+        onComplete: () => {
+          menu.setAttribute('hidden', '')
+          menu.removeAttribute('data-open')
+          gsap.set(menu, { display: 'none' })
+        }
+      })
+    }
   }
 
   // Toggle‐Funktion für Mobile/Click
